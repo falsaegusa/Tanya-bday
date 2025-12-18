@@ -103,8 +103,12 @@ if (tapTarget) {
         // Play music
         const music = document.getElementById('bg-music');
         if (music) {
-            music.volume = 0.5; // Set reasonable volume
-            music.play().catch(e => console.log("Audio play failed:", e));
+            // music.volume = 0.5; // Removed: iOS ignores this and it might cause init issues
+            music.play().then(() => {
+                // Success
+            }).catch(e => {
+                console.log("Audio play failed (browser blocked):", e);
+            });
         }
 
         // Loop is already running, so as soon as things become visible/black screen lifts, they will render correctly.
